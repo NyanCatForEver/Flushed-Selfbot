@@ -2,9 +2,9 @@
 Flushed Selfbot is a **free**, **open-source** selfbot for [Discord](https://discord.com) coded in C#
 
 ## Dependencies
-[Anarchy wrapper](https://github.com/not-ilinked/Anarchy)
-[Colorful.Console](https://github.com/tomakita/Colorful.Console)
-[Costura.Fody](https://github.com/Fody/Costura)
+* [Anarchy wrapper](https://github.com/not-ilinked/Anarchy)
+* [Colorful.Console](https://github.com/tomakita/Colorful.Console)
+* [Costura.Fody](https://github.com/Fody/Costura)
 
 ## Building
 1. Download Anarchy wrapper src from [dev branch](https://github.com/not-ilinked/Anarchy/tree/dev) (Flushed Selfbot **doesn't** work with master branch)
