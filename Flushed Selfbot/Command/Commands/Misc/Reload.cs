@@ -11,6 +11,8 @@ namespace FlushedSelfbot.Command.Commands.Misc
 
         public override void Execute()
         {
+            Bot.AutoFeur.Load();
+            Bot.MessageLogger.Load();
             Bot.ConfigManager.Load();
             Message.Edit(new MessageEditProperties {Content = "> Reloaded configuration."});
         }

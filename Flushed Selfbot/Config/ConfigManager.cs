@@ -12,8 +12,7 @@ namespace FlushedSelfbot.Config
 {
     internal class ConfigManager
     {
-        private static readonly string ConfigFolder = Directory.GetCurrentDirectory() + @"\config";
-        private readonly string _config = ConfigFolder + @"\config.json";
+        private readonly string _config = Directory.GetCurrentDirectory() + @"\config\config.json";
         public string Prefix = "=";
         public string Token;
         public bool DeleteEmbeds = true;
@@ -22,7 +21,7 @@ namespace FlushedSelfbot.Config
 
         public void Save()
         {
-            Directory.CreateDirectory(ConfigFolder);
+            Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\config");
             
             try
             {
@@ -127,7 +126,11 @@ namespace FlushedSelfbot.Config
                                                             "api/webhooks/".Length);
                                 var id = ulong.Parse(cut.Split('/')[0]);
                                 var webhookToken = cut.Split('/')[1];
-                                Webhook.DiscordWebhook = new DiscordDefaultWebhook(id, webhookToken);
+                                try
+                                {
+                                    Webhook.DiscordWebhook = new DiscordDefaultWebhook(id, webhookToken);
+                                }
+                                catch (DiscordHttpException) {}
                             }
 
                             var safemode = (JObject) json.SelectToken("safemode");
@@ -147,8 +150,6 @@ namespace FlushedSelfbot.Config
                         }
                     }
                 }
-                
-                Console.WriteLine("Loaded configuration.", Color.SpringGreen);
                 Save();
             }
             catch (IOException e)
@@ -156,6 +157,8 @@ namespace FlushedSelfbot.Config
                 Console.WriteLine(e, Color.Red);
                 File.Delete(_config);
             }
+            
+            AppDomain.CurrentDomain.ProcessExit += (sender, args) => Save();
         }
     }
 }

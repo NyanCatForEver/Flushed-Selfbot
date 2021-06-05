@@ -10,14 +10,13 @@ namespace FlushedSelfbot.Config
 {
     internal class AutoFeur
     {
-        private static readonly string ConfigFolder = Directory.GetCurrentDirectory() + @"\config";
-        private readonly string _config = ConfigFolder + @"\autofeur.json";
+        private readonly string _config = Directory.GetCurrentDirectory() + @"\config\autofeur.json";
         public readonly Dictionary<string, string[]> Map = new Dictionary<string, string[]>();
         public bool Enabled;
 
         private void Save()
         {
-            Directory.CreateDirectory(ConfigFolder);
+            Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\config");
             
             try
             {
@@ -111,6 +110,7 @@ namespace FlushedSelfbot.Config
                         }
                     }
                 }
+                Save();
             }
             catch (IOException e)
             {

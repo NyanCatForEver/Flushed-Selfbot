@@ -92,6 +92,7 @@
         <Compile Include="Command\Commands\Utility\Webhook.cs" />
         <Compile Include="Config\AutoFeur.cs" />
         <Compile Include="Config\ConfigManager.cs" />
+        <Compile Include="Config\MessageLogger.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Resources.Designer.cs">
           <DesignTime>True</DesignTime>
