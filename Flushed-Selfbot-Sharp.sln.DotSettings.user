@@ -5,6 +5,8 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CNyan_005CDownloads_005CFlushed_002DSelfbot_002DSharp_005CFlushed_0020Selfbot_005Clib_005Cwebsocket_002Dsharp_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\Nyan\Downloads\Flushed-Selfbot-Sharp\packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Nyan\Downloads\Flushed-Selfbot-Sharp\Flushed Selfbot\lib\Newtonsoft.Json.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Nyan\Downloads\Flushed-Selfbot-Sharp\Flushed Selfbot\lib\Anarchy.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=Flushed_0020Selfbot_002FResources/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>
