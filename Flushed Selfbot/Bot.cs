@@ -26,7 +26,7 @@ namespace FlushedSelfbot
         public static readonly Dictionary<ulong, List<ulong>> CachedMembers = new Dictionary<ulong, List<ulong>>();
 
         public const string Name = "Flushed Selfbot",
-            Version = "0.1-BETA",
+            Version = "0.2-beta",
             FlushedUrl = "https://cdn.discordapp.com/attachments/844313460330332171/844986513791909939/flushed.png";
 
         public static readonly PrivateFontCollection FontCollection = new PrivateFontCollection();
