@@ -1,4 +1,6 @@
-﻿using Discord;
+﻿using System.Drawing;
+using Colorful;
+using Discord;
 
 namespace FlushedSelfbot.Command.Commands.Misc
 {
@@ -12,9 +14,11 @@ namespace FlushedSelfbot.Command.Commands.Misc
         public override void Execute()
         {
             Bot.AutoFeur.Load();
-            Bot.MessageLogger.Load();
             Bot.ConfigManager.Load();
+            Bot.MessageLogger.Load();
+            Bot.NitroSniper.Load();
             Message.Edit(new MessageEditProperties {Content = "> Reloaded configuration."});
+            Console.WriteLine("Reloaded configuration.", Color.SpringGreen);
         }
     }
 }

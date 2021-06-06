@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,9 +18,10 @@ namespace FlushedSelfbot
     {
         public static DiscordSocketClient Client;
         public static CommandManager CommandManager;
+        public static readonly AutoFeur AutoFeur = new AutoFeur();
         public static readonly ConfigManager ConfigManager = new ConfigManager();
         public static readonly MessageLogger MessageLogger = new MessageLogger();
-        public static readonly AutoFeur AutoFeur = new AutoFeur();
+        public static readonly NitroSniper NitroSniper = new NitroSniper();
         private static bool _loggedIn;
         public static readonly Dictionary<ulong, List<ulong>> CachedMembers = new Dictionary<ulong, List<ulong>>();
 
@@ -60,6 +59,7 @@ namespace FlushedSelfbot
             AutoFeur.Load();
             ConfigManager.Load();
             MessageLogger.Load();
+            NitroSniper.Load();
             Console.WriteLine("Loaded configuration.", Color.SpringGreen);
 
             var bytes = (byte[]) Resources.ResourceManager.GetObject("Comfortaa");
@@ -148,29 +148,14 @@ namespace FlushedSelfbot
 
         private static void OnMessageReceived(DiscordSocketClient client, MessageEventArgs args)
         {
-            MessageLogger.OnMessageReceived(client, args);
-            
             var content = args.Message.Content;
+
+            AutoFeur.OnMessageReceived(client, args.Message);
+            MessageLogger.OnMessageReceived(args.Message);
+            NitroSniper.OnMessageReceived(client, args.Message);
+
             if (args.Message.Author.User.Id != Client.User.Id)
-            {
-                if (!AutoFeur.Enabled) return;
-                
-                var alphabetic = content.Where(ch => char.IsLetter(ch) || char.IsDigit(ch))
-                    .Aggregate("", (current, ch) => current + ch);
-
-                foreach (var feur in AutoFeur.Map.Where(feur =>
-                    feur.Value.Any(toggler => alphabetic.ToLower().EndsWith(toggler.ToLower()))))
-                {
-                    args.Message.Channel.SendMessage(feur.Key);
-                    Console.WriteLine(
-                        $"[{DateTime.Now:g}] {feur.Key.First().ToString().ToUpper() + feur.Key.Substring(1)}ed " +
-                        args.Message.Author + " in guild \"" + Client.GetGuild(args.Message.Guild).Name +
-                        "\" in channel \"" +
-                        Client.GetChannel(args.Message.Channel.Id).Name + "\".", Color.Aqua);
-                }
-
                 return;
-            }
 
             if (ConfigManager.DeleteEmbeds && args.Message.Embed != null && args.Message.Embed.Footer.Text.Equals(Name))
             {
@@ -185,13 +170,14 @@ namespace FlushedSelfbot
                 return;
 
             var command = CommandManager.OnMessageReceived(client, args.Message);
-            if (command != null)
-                Console.WriteLine($"[{DateTime.Now:g}] Used command {command.Name}", Color.Aqua);
+            if (command != null) Console.WriteLine($"[{DateTime.Now:g}] Used command {command.Name}", Color.Aqua);
         }
 
         private static void OnMessageEdited(DiscordSocketClient client, MessageEventArgs args)
         {
-            MessageLogger.OnMessageEdited(client, args);
+            AutoFeur.OnMessageReceived(client, args.Message);
+            MessageLogger.OnMessageEdited(args.Message);
+            NitroSniper.OnMessageReceived(client, args.Message);
             
             if (args.Message.Author.User.Id != Client.User.Id)
                 return;
@@ -208,7 +194,7 @@ namespace FlushedSelfbot
         
         private static void OnMessageDeleted(DiscordSocketClient client, MessageDeletedEventArgs args)
         {
-            MessageLogger.OnMessageDeleted(client, args);
+            MessageLogger.OnMessageDeleted(client, args.DeletedMessage);
         }
 
         private static void OnLoggedIn(DiscordSocketClient client, LoginEventArgs args)

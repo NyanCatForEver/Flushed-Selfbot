@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using Colorful;
+using Discord;
+using Discord.Gateway;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Console = Colorful.Console;
 
 namespace FlushedSelfbot.Config
 {
@@ -116,6 +119,25 @@ namespace FlushedSelfbot.Config
             {
                 Console.WriteLine(e, Color.Red);
                 File.Delete(_config);
+            }
+        }
+
+        public void OnMessageReceived(DiscordSocketClient client, DiscordMessage message)
+        {
+            if (!Enabled || message.Author.User.Id == client.User.Id) return;
+                
+            var alphabetic = message.Content.Where(ch => char.IsLetter(ch) || char.IsDigit(ch))
+                .Aggregate("", (current, ch) => current + ch);
+
+            foreach (var feur in Map.Where(feur =>
+                feur.Value.Any(toggler => alphabetic.ToLower().EndsWith(toggler.ToLower()))))
+            {
+                message.Channel.SendMessage(feur.Key);
+                Console.WriteLine(
+                    $"[{DateTime.Now:g}] {feur.Key.First().ToString().ToUpper() + feur.Key.Substring(1)}ed " +
+                    message.Author + " in guild \"" + client.GetGuild(message.Guild).Name +
+                    "\" in channel \"" +
+                    client.GetChannel(message.Channel.Id).Name + "\".", Color.Aqua);
             }
         }
     }
