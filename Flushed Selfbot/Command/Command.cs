@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Discord;
 using Discord.Gateway;
+using FlushedSelfbot.Utils;
 
 namespace FlushedSelfbot.Command
 {

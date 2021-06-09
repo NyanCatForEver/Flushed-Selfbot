@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Discord;
 
 namespace FlushedSelfbot.Command.Commands.Misc
@@ -17,10 +18,11 @@ namespace FlushedSelfbot.Command.Commands.Misc
                 Title = "About",
                 Color = Color.FromArgb(0xFFDD00),
                 ThumbnailUrl = Bot.FlushedUrl,
-                Description = "**Selfbot name:** " + Bot.Name + ".\n" +
-                              "**Selfbot version:** " + Bot.Version + ".\n" +
-                              "**Selfbot developer:** " + "NyanCatForEver" + ".\n" +
-                              "**Selfbot creation date:** " + "28/05/2021" + ".\n",
+                Description = $"**Name:** {Bot.Name}\n" +
+                              $"**Version:** {Bot.Version}\n" +
+                              "**Developer:** NyanCatForEver\n" +
+                              "**Creation date:** 28/05/2021\n" +
+                              $"**Uptime:** {Bot.UpTime.Elapsed:hh\\:mm\\:ss}",
                 Footer = new EmbedFooter
                 {
                     Text = Bot.Name,

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,12 +24,13 @@ namespace FlushedSelfbot
         public static readonly ConfigManager ConfigManager = new ConfigManager();
         public static readonly MessageLogger MessageLogger = new MessageLogger();
         public static readonly NitroSniper NitroSniper = new NitroSniper();
+        public static readonly Stopwatch UpTime = new Stopwatch();
         private static bool _loggedIn;
-        public static readonly Dictionary<ulong, List<ulong>> CachedMembers = new Dictionary<ulong, List<ulong>>();
+        public static readonly Dictionary<ulong, List<GuildMember>> CachedMembers = new Dictionary<ulong, List<GuildMember>>();
 
         public const string Name = "Flushed Selfbot",
             Version = "0.2-beta",
-            FlushedUrl = "https://cdn.discordapp.com/attachments/844313460330332171/844986513791909939/flushed.png";
+            FlushedUrl = "https://cdn.discordapp.com/attachments/847091612860809266/852237142779625562/flushed_inverted.png";
 
         public static readonly PrivateFontCollection FontCollection = new PrivateFontCollection();
 
@@ -53,7 +56,7 @@ namespace FlushedSelfbot
             }).Start();
 
 
-            Console.Title = Name + " " + Version + " | Initializing";
+            Console.Title = $"{Name} {Version} | Initializing";
             ClearConsole();
 
             AutoFeur.Load();
@@ -87,13 +90,19 @@ namespace FlushedSelfbot
             Client.OnUserJoinedGuild += (client, args) =>
             {
                 if (!CachedMembers.ContainsKey(args.Member.Guild.Id))
-                    CachedMembers.Add(args.Member.Guild.Id, new List<ulong>());
-                CachedMembers[args.Member.Guild.Id].Add(args.Member.User.Id);
+                    CachedMembers.Add(args.Member.Guild.Id, new List<GuildMember>());
+                CachedMembers[args.Member.Guild.Id].Add(args.Member);
             };
             Client.OnUserLeftGuild += (client, args) =>
             {
-                if (CachedMembers.ContainsKey(args.Member.Guild.Id))
-                    CachedMembers[args.Member.Guild.Id].Remove(args.Member.User.Id);
+                if (!CachedMembers.ContainsKey(args.Member.Guild.Id)) return;
+
+                foreach (var member in CachedMembers[args.Member.Guild.Id]
+                    .Where(member => member.User.Id == args.Member.User.Id))
+                {
+                    CachedMembers.Remove(member);
+                    break;
+                }
             };
 
             try
@@ -116,6 +125,7 @@ namespace FlushedSelfbot
                     Console.Title = Name + " " + Version + " | Logging in";
                     Console.Write("\b \b\b \b\b \b");
                 }
+                UpTime.Start();
 
                 Console.SetCursorPosition(0, Console.CursorTop);
                 Console.Write(new string(' ', Console.BufferWidth));
