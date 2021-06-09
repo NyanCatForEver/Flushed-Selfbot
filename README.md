@@ -1,6 +1,9 @@
 # About
 Flushed Selfbot is a **free**, **open-source** selfbot for [Discord](https://discord.com) coded in C#
 
+## Downloading
+Download it from the [releases tab](https://github.com/NyanCatForEver/Flushed-Selfbot/releases)
+
 ## Dependencies
 * [Anarchy wrapper](https://github.com/not-ilinked/Anarchy)
 * [Colorful.Console](https://github.com/tomakita/Colorful.Console)
