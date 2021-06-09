@@ -27,6 +27,7 @@ namespace FlushedSelfbot
         public static readonly Stopwatch UpTime = new Stopwatch();
         private static bool _loggedIn;
         public static readonly Dictionary<ulong, List<GuildMember>> CachedMembers = new Dictionary<ulong, List<GuildMember>>();
+        private static List<DiscordEmbed> embeds = new List<DiscordEmbed>();
 
         public const string Name = "Flushed Selfbot",
             Version = "0.2-beta",
