@@ -27,7 +27,8 @@ namespace FlushedSelfbot.Command
                 new About(), new Avatar(), new Blank(), new Cat(), new MassPing(), new Neko(), new NsfwNeko(),
                 new Help(), new Spam(), new HowGay(), new Invert(), new Shutdown(), new Big(), new UserInfo(),
                 new Prefix(), new Reload(), new NekoGif(), new NsfwNekoGif(), new Webhook(), new Dog(), new HttpCat(),
-                new Lizard(), new Meme(), new Panda(), new Bird(), new Fox(), new Racoon(), new Koala(), new Kangaroo()
+                new Lizard(), new Meme(), new Panda(), new Bird(), new Fox(), new Racoon(), new Koala(), new Kangaroo(),
+                new StopSpamming()
             };
         }
 

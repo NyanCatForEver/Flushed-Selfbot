@@ -88,6 +88,7 @@
         <Compile Include="Command\Commands\Utility\Avatar.cs" />
         <Compile Include="Command\Commands\Utility\Invert.cs" />
         <Compile Include="Command\Commands\Utility\Spam.cs" />
+        <Compile Include="Command\Commands\Utility\StopSpamming.cs" />
         <Compile Include="Command\Commands\Utility\UserInfo.cs" />
         <Compile Include="Command\Commands\Utility\Webhook.cs" />
         <Compile Include="Config\AutoFeur.cs" />
